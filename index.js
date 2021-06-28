@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const { extname } = require('path');
 
 const server = http.createServer((req,res)=>{
 //     if(req.url === '/'){
@@ -37,7 +38,8 @@ const server = http.createServer((req,res)=>{
 // 
         let filePath = path.join(__dirname,'public', req.url==='/' ? 'index.html':req.url);
         let extName = path.extname(filePath);
-        let contentType='type/html';
+        let contentType='text/html';
+        
 
         switch(extName){
             case '.js':
@@ -57,6 +59,8 @@ const server = http.createServer((req,res)=>{
                 break;
 
         }
+        if(contentType =='text/html'&& extName =='')
+        filePath+='.html';
     
         fs.readFile(filePath, (err,content)=>{
             if(err){
